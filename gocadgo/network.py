@@ -24,4 +24,5 @@ class Network:
         # Modify a cell:
         self.network[0, 0, 0].q = 8.0
         self.network[0, 0, 0].pressure_loss = 2.0
+
         print(f"Modified Cell at (0, 0, 0): {self.network[0, 0, 0]}")
