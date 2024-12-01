@@ -4,16 +4,18 @@
 ## To Do  
 [] Add depedencies <br>
 [] Add example code and readme. <br>
+[] Correct code for P and Q calcs
+[] ensure network is connected correctly and propagates 
 
-## Installation 
+## Installation
 
 ```bash
-pip install go-cad-go
+pip install gocadgo
 ```
-In testing and planning stages - do not use
+In testing and planning stages - do not use. 
+
 
 ## Basic Usage
-
 
 ```python
 from gocadgo import func1
@@ -53,6 +55,7 @@ For assistance with parameter selection refer to [RFC 9106](https://www.rfc-edit
 ### Function Exceptions
 
 ### Uploading to PyPi
+<b> Note:  ``setup.py`` is now depreciated. Instead, use pypa/build, pypa/installer or other standards-based tools. </b>
 
 Check distribution: 
 ```console 
