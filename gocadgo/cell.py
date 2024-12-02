@@ -1,4 +1,5 @@
 import cantera as ct
+
 class Cell:
     def __init__(self, gas_type:str, T:float, P:float, m:float):
         """
@@ -35,32 +36,83 @@ class Cell:
 
     @property
     def P(self):
-        """I'm the 'x' property."""
+        """
+        Get the pressure in the cell (Pa)
+        Returns
+        -------
+
+        """
         return self._x
 
     @P.setter
     def P(self, value):
+        """
+        Set the pressure in the cell (Pa)
+        Parameters
+        ----------
+        value: set value
+        Returns
+        -------
+
+        """
         self._x = value
 
     @property
     def T(self):
-        """I'm the 'x' property."""
+        """
+        Get the pressure in the cell (K)
+        Returns
+        -------
+
+        """
         return self._x
 
     @P.setter
     def T(self, value):
+        """
+        Set the temperature in the cell (K)
+        Parameters
+        ----------
+        value
+
+        Returns
+        -------
+
+        """
         self._x = value
 
     @property
     def m(self):
-        """I'm the 'x' property."""
+        """
+        Get the mass flow rate in kg/s
+        Returns
+        -------
+
+        """
         return self._x
 
     @P.setter
     def m(self, value):
+        """
+        Set the mass flow rate in kg/s
+        Parameters
+        ----------
+        value
+
+        Returns
+        -------
+
+        """
         self._x = value
 
-    @property
+    def get_q(self, T:float, m:float, T_prev):
+        self.gas.TP = self.T, self.P
+        self.q = m * self.gas.cp * (T - T_prev) # anticipated heat transfer between two connected cells
+        return self.q
+
+    def update_fields(self):
+        self.T  - T_prev = m * self.gas.cp * (T - T_prev) # anticipated heat transfer between two connected cells
+
     def p_factor(self):
         """
 

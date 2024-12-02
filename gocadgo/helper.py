@@ -1,4 +1,4 @@
-def set_boundary(T_in=300, P_in=101325, m_in=0.1, P_out=101325, T_out=300, gas_type="N2"):
+def set_initial(T_in=300, P_in=101325, m_in=0.1, gas_type="N2"):
     """
     A function to set the inputs for the boundary conditions (or at least the default)
     Can take custom values for T_in, P_in, etc.
@@ -16,4 +16,21 @@ def set_boundary(T_in=300, P_in=101325, m_in=0.1, P_out=101325, T_out=300, gas_t
         'P': P_in,
         'm': m_in,
         'gas_type': gas_type
+    }
+
+def set_boundary(P_out, T_out):
+    """
+    Set the values across a cell at the inlet boundary.
+    Parameters
+    ----------
+    P_out: previous cell's values of Pa
+    T_out: previous cell's values of T
+
+    Returns
+    -------
+
+    """
+    return {
+        'P_out': P_out,
+        'T_out': T_out,
     }
