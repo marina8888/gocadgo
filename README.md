@@ -22,7 +22,7 @@ iteratively.
 ## Basic Usage
 
 ```python
-    from gocadgo import set_boundary, Network, show_fields
+from gocadgo import set_boundary, Network, show_fields
 
 # set boundary conditions: 
 my_inlet = set_boundary(T_in=300,

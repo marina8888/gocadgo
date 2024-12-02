@@ -2,7 +2,7 @@ import numpy as np
 from cell import Cell
 from helper import set_boundary, set_initial
 class Network:
-    def __init__(self, height:int, width:int, length:int, inital: dict = None, boundary: dict = None):
+    def __init__(self, height:int, width:int, length:int, initial: dict = None, boundary: dict = None):
         """
         Create a network object representing a heat exchanger.
         Parameters
@@ -12,8 +12,8 @@ class Network:
         length: by number of cells
         boundary : starting conditions, set by the set_boundary function
         """
-        self.network = self.create_network(height, width, length, inital)
-        self.init_fields(inital, boundary)
+        self.network = self.create_network(height, width, length, initial)
+        self.init_boundary(initial, boundary)
 
         # "timestep-like" iteration:
         for t in range(5):
@@ -46,10 +46,16 @@ class Network:
             boundary = set_boundary()
             print("Using default boundary conditions")
 
+        # Iterate over each i and j, update fields for the second slice, and print values
+        for i in range(self.network.shape[0]):
+            for j in range(self.network.shape[1]):
+                # Update the fields of the second cell (network[i, j, 1])
+                self.network[i, j, 1].update_fields(T_prev=boundary['T_out'], P_prev=boundary['P_out'])
 
-        # the first row (lengthwise) of the network has predefined properties:
-        self.network[:, :, 0] = Cell(**boundary)
-        self.network[:, :, 1] = Cell(**boundary).update_fields(**inital, m=boundary['m']) # is there a better way to write this?
+                # Print values for verification
+                print(self.network[i, j, 1].T)  # Print the T value of the second cell
+                print(self.network[i, j, 1].P)  # Print the P value of the second cell
+                print(self.network[i, j, 1].m)  # Print the m value of the second cell
 
     def run_network(self):
         """
@@ -57,5 +63,11 @@ class Network:
         Returns
         -------
         """
-        # start_cell.update_fields(**inital)
+        for i in range(self.network.shape[0]):  # Iterate over the first dimension
+            for j in range(self.network.shape[1]):  # Iterate over the second dimension
+                for k in range(self.network.shape[2]):  # Iterate over the third dimension
+                    cell = self.network[i, j, k]
+                    # Perform your operation on each cell
+                    cell.update_fields(T_prev=..., P_prev=...)
+
         return self.network

@@ -10,20 +10,20 @@ def main():
 
     # setting up inital field:
 
-    air_init = set_initial(T_in=20,
-                 P_in=100000,
-                 m_in=0.034/(HEIGHT*WIDTH),
+    air_init = set_initial(T=20,
+                 P=100000,
+                 m=0.034/(HEIGHT*WIDTH),
                  gas_type="air"
                  )
 
-    nitrogen_init = set_initial(T_in=350,
-                 P_in=440000,
-                 m_in=0.01/(HEIGHT*WIDTH),
+    nitrogen_init = set_initial(T=350,
+                 P=440000,
+                 m=0.01/(HEIGHT*WIDTH),
                  gas_type="N2"
                  )
 
     air_boundary = set_boundary(T_out=30, P_out=99985)
-    nitrogen_boundary = set_boundary(T_in=300, P_in=439995)
+    nitrogen_boundary = set_boundary(T_out=300, P_out=439995)
 
     # create mesh and run network:
     air_train = Network(WIDTH, HEIGHT, LENGTH, air_init, air_boundary)

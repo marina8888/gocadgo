@@ -1,4 +1,4 @@
-def set_initial(T_in=300, P_in=101325, m_in=0.1, gas_type="N2"):
+def set_initial(T=300, P=101325, m=0.1, gas_type="N2"):
     """
     A function to set the inputs for the boundary conditions (or at least the default)
     Can take custom values for T_in, P_in, etc.
@@ -12,9 +12,9 @@ def set_initial(T_in=300, P_in=101325, m_in=0.1, gas_type="N2"):
     -------
     """
     return {
-        'T': T_in,
-        'P': P_in,
-        'm': m_in,
+        'T': T,
+        'P': P,
+        'm': m,
         'gas_type': gas_type
     }
 

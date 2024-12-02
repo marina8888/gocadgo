@@ -15,8 +15,8 @@ def show_fields(network, field = 'T', slice_index = 2):
 
     """
     #  Slicing:
-    Z = np.array([[getattr(network[i, j, slice_index], field) for j in range(network.shape[1])] for i in range(network.shape[0])])
-    X, Y = np.meshgrid(np.arange(network.shape[1]), np.arange(network.shape[0]))
+    Z = np.array([[getattr(network[slice_index, j, k], field) for j in range(network.shape[1])] for k in range(network.shape[2])])
+    X, Y = np.meshgrid(np.arange(network.shape[1]), np.arange(network.shape[2]))
 
     fig = plt.figure(figsize=(8, 6))
     ax = fig.add_subplot(111, projection='3d')

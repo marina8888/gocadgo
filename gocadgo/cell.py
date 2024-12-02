@@ -1,14 +1,14 @@
 import cantera as ct
 
 class Cell:
-    def __init__(self, gas_type:str, T:float, P:float, m:float):
+    def __init__(self, T:float, P:float, m:float, gas_type:str):
         """
         Class repressenting a cell in a heat exchanger.
         Parameters
         ----------
-        T_in is cell inlet temperature to cell in Kelvin
-        P_in is cell inlet pressure in Pa
-        m_in is cell inlet mass flow rate in kg/s
+        T is cell inlet temperature to cell in Kelvin
+        P is cell inlet pressure in Pa
+        m is cell inlet mass flow rate in kg/s
         """
         if gas_type == 'N2' or 'nitrogen':
             self.gas = ct.Nitrogen()
@@ -16,14 +16,12 @@ class Cell:
             self.gas = ct.Solution('air.yaml')
         else:
             raise ValueError(f'gas type {gas_type} not supported')
-
-        self.q = None
+        self.q = 0
         self.T = T
         self.P = P
         self.m = m
+        self.gas.TP = self._T, self._P
 
-        self.gas.TP = self.T, self.P
-        self._cp = self.gas.cp_mass
 
     def __repr__(self):
         """
@@ -32,7 +30,7 @@ class Cell:
         -------
 
         """
-        return f"Cell(Cp = {self._cp}"
+        return f"Cell(T = {self.T}, P = {self.P}, m = {self.m})"
 
 
     @property
@@ -43,7 +41,7 @@ class Cell:
         -------
 
         """
-        return self._x
+        return self._P
 
     @P.setter
     def P(self, value):
@@ -56,7 +54,7 @@ class Cell:
         -------
 
         """
-        self._x = value
+        self._P = value
 
     @property
     def T(self):
@@ -66,9 +64,9 @@ class Cell:
         -------
 
         """
-        return self._x
+        return self._T
 
-    @P.setter
+    @T.setter
     def T(self, value):
         """
         Set the temperature in the cell (K)
@@ -80,7 +78,7 @@ class Cell:
         -------
 
         """
-        self._x = value
+        self._T = value
 
     @property
     def m(self):
@@ -90,9 +88,9 @@ class Cell:
         -------
 
         """
-        return self._x
+        return self._m
 
-    @P.setter
+    @m.setter
     def m(self, value):
         """
         Set the mass flow rate in kg/s
@@ -104,15 +102,15 @@ class Cell:
         -------
 
         """
-        self._x = value
+        self._m = value
 
-    def get_q(self, T_prev):
-        self.gas.TP = self.T, self.P
-        self.q = self.m * self.gas.cp_mass * (T - T_prev) # anticipated heat transfer between two connected cells
-        return self.q
+    def update_q(self, T_prev:float):
+        self.gas.TP = self._T, self._P
+        self.q = self._m * self.gas.cp_mass * (self.T - T_prev) # anticipated heat transfer between two connected cells
 
-    def update_fields(self):
-        self.T  - T_prev = self.q /  # anticipated heat transfer between two connected cells
+    def update_fields(self, T_prev:float, P_prev:float):
+        self.update_q(P_prev)
+        self.T = self.q / (self._m * self.gas.cp_mass) + T_prev # anticipated heat transfer between two connected cells
 
     def p_factor(self):
         """
