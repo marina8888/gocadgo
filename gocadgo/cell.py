@@ -17,6 +17,7 @@ class Cell:
         else:
             raise ValueError(f'gas type {gas_type} not supported')
 
+        self.q = None
         self.T = T
         self.P = P
         self.m = m
@@ -105,13 +106,13 @@ class Cell:
         """
         self._x = value
 
-    def get_q(self, T:float, m:float, T_prev):
+    def get_q(self, T_prev):
         self.gas.TP = self.T, self.P
-        self.q = m * self.gas.cp * (T - T_prev) # anticipated heat transfer between two connected cells
+        self.q = self.m * self.gas.cp_mass * (T - T_prev) # anticipated heat transfer between two connected cells
         return self.q
 
     def update_fields(self):
-        self.T  - T_prev = m * self.gas.cp * (T - T_prev) # anticipated heat transfer between two connected cells
+        self.T  - T_prev = self.q /  # anticipated heat transfer between two connected cells
 
     def p_factor(self):
         """
