@@ -6,6 +6,7 @@
 [] Add example code and readme. <br>
 [] Correct code for P and Q calcs
 [] ensure network is connected correctly and propagates 
+[] get the fields to actually print (somehow)
 
 ## Installation
 
@@ -18,11 +19,20 @@ In testing and planning stages - do not use.
 ## Basic Usage
 
 ```python
-from gocadgo import func1
-param1 = 2
-param2 = 1
-func(param1, param2)
-
+    # set boundary conditions: 
+    my_inlet = set_boundary(T_in=300,
+                 P_in=101325,
+                 m_in=0.1, 
+                 P_out=101325,
+                 T_out=300, 
+                 gas_type="N2"
+                 )
+    
+    # create mesh and run network: 
+    sky_train = Network(8, 8, 20, my_inlet)
+    
+    # display fields of interest: 
+    show_fields(sky_train, 'q')
 ```
 Explain here
 

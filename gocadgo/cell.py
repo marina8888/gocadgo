@@ -23,16 +23,14 @@ class Cell:
         self.gas.TP = T_in, P_in
         self._cp = self.gas.cp_mass
 
-        self.p_factor = (self.P_out - self.P_in)/self.gas.density_mass
-
-    def __repr__(self):
-        """
-        String representation of the cell.
-        Returns
-        -------
-
-        """
-        return f"Cell(Cp = {self.cp}, Heat Loss ={self.heat}, Pressure Loss={self.pressure_loss})"
+    # def __repr__(self):
+    #     """
+    #     String representation of the cell.
+    #     Returns
+    #     -------
+    #
+    #     """
+    #     return f"Cell(Cp = {self._cp}, Heat Loss ={self.calc_cell_p}, Pressure Loss={self.calc_cell_q})"
 
 
     @property
@@ -63,7 +61,7 @@ class Cell:
         """
         self.T_out = self.cp * Q_prev * self.T_in
 
-    def calc_q(self):
+    def calc_cell_q(self):
         """
         Heat loss is defined as Q = m * Cp * delta T.
         Parameters
@@ -71,23 +69,30 @@ class Cell:
         T_in
         T_out
 
-        Returns
+        Returns Q_prev
         -------
         """
         return self.m_in * self.cp * (self.T_in - self.T_out)
 
-    def calc_p(self):
+    def calc_cell_p(self):
         """
-        Pressure calculated by Darcy Weisbach, actually proportional to density.
+        Pressure loss can be calculated by Darcy-Weisbach, actually removing the effect of turbulence, friction etc we assume density proportionality
         Parameters
         ----------
-        T_in
-        T_out
-
-        Returns
+        Returns P_prev
         -------
         """
         return self.p_factor * self.gas.density_mass
+
+    @property
+    def p_factor(self):
+        """
+
+        Returns
+        -------
+
+        """
+        self.p_factor = (self.P_out - self.P_in) / self.gas.density_mass
 
 
 class StartCell(Cell):
