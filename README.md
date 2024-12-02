@@ -2,8 +2,9 @@
 
 
 ## To Do  
-[ ] Add depedencies <br>
-[ ] Add example code and readme. <br>
+[x] Add depedencies <br>
+[x] Add example code and readme. <br>
+[ ] Add link to documentation <br>
 [ ] Correct code for P and Q calcs <br>
 [ ] ensure network is connected correctly and propagates <br>
 [ ] get the fields to actually print (somehow) <br>
@@ -36,15 +37,13 @@ In testing and planning stages - do not use.
     # display fields of interest: 
     show_fields(sky_train, 'q')
 ```
-Explain here
 
-### Function Choices
+### Documentation
+
+
+## How Conjugate HT is Calculated
 
 Explain functions you can call
-
-### Function Parameters
-
-The `func1` and `func2` functions take in the following parameters:
 
 ##### Positional
 

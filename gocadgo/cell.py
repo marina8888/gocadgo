@@ -1,6 +1,6 @@
 import cantera as ct
 class Cell:
-    def __init__(self, gas_type:str, T_in:float, P_in:float, m_in:float):
+    def __init__(self, gas_type:str, T:float, P:float, m:float):
         """
         Class repressenting a cell in a heat exchanger.
         Parameters
@@ -16,73 +16,49 @@ class Cell:
         else:
             raise ValueError(f'gas type {gas_type} not supported')
 
-        self.T_in = T_in
-        self.P_in = P_in
-        self.m_in = m_in
+        self.T = T
+        self.P = P
+        self.m = m
 
-        self.gas.TP = T_in, P_in
+        self.gas.TP = self.T, self.P
         self._cp = self.gas.cp_mass
 
-    # def __repr__(self):
-    #     """
-    #     String representation of the cell.
-    #     Returns
-    #     -------
-    #
-    #     """
-    #     return f"Cell(Cp = {self._cp}, Heat Loss ={self.calc_cell_p}, Pressure Loss={self.calc_cell_q})"
+    def __repr__(self):
+        """
+        String representation of the cell.
+        Returns
+        -------
+
+        """
+        return f"Cell(Cp = {self._cp}"
 
 
     @property
-    def P_out(self, P_prev):
-        """
-        Heat loss is defined as Q = m * Cp * delta T.
-        Parameters
-        ----------
-        T_in
-        T_out
+    def P(self):
+        """I'm the 'x' property."""
+        return self._x
 
-        Returns
-        -------
-        """
-        self.P_out = self.cp * P_prev * self.T_in
+    @P.setter
+    def P(self, value):
+        self._x = value
 
     @property
-    def T_out(self, Q_prev):
-        """
-        Heat loss is defined as Q = m * Cp * delta T.
-        Parameters
-        ----------
-        T_in
-        T_out
+    def T(self):
+        """I'm the 'x' property."""
+        return self._x
 
-        Returns
-        -------
-        """
-        self.T_out = self.cp * Q_prev * self.T_in
+    @P.setter
+    def T(self, value):
+        self._x = value
 
-    def calc_cell_q(self):
-        """
-        Heat loss is defined as Q = m * Cp * delta T.
-        Parameters
-        ----------
-        T_in
-        T_out
+    @property
+    def m(self):
+        """I'm the 'x' property."""
+        return self._x
 
-        Returns Q_prev
-        -------
-        """
-        return self.m_in * self.cp * (self.T_in - self.T_out)
-
-    def calc_cell_p(self):
-        """
-        Pressure loss can be calculated by Darcy-Weisbach, actually removing the effect of turbulence, friction etc we assume density proportionality
-        Parameters
-        ----------
-        Returns P_prev
-        -------
-        """
-        return self.p_factor * self.gas.density_mass
+    @P.setter
+    def m(self, value):
+        self._x = value
 
     @property
     def p_factor(self):
@@ -93,39 +69,4 @@ class Cell:
 
         """
         self.p_factor = (self.P_out - self.P_in) / self.gas.density_mass
-
-
-class StartCell(Cell):
-    """
-    Class representing the starting cell in a heat exchanger where outlet properties are known.
-    """
-    def __init__(self, gas_type:str, T_in:float, P_in:float, m_in:float, T_out:float, P_out:float):
-        super().__init__(gas_type, T_in, P_in, m_in)
-
-    @property
-    def P_out(self, P_out):
-        """
-        Override P_out setter from Cell class.
-        Parameters
-        ----------
-        P_out
-
-        Returns
-        -------
-
-        """
-        self.P_out = P_out
-    @property
-    def T_out(self, T_out):
-        """
-        Override T_out setter from Cell class.
-        Parameters
-        ----------
-        T_in
-        T_out
-
-        Returns
-        -------
-        """
-        self.T_out = T_out
 
