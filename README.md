@@ -51,14 +51,6 @@ The `func1` and `func2` functions take in the following parameters:
 ##### Keyword (Optional)
 
 - **keyword** : add meaning here
-- **hash_len** : The length in bytes of the resulting hash.
-- **time_cost** : The number of iterations to perform.
-- **memory_cost** : The number of kibibytes in memory to utilise.
-- **parallelism** : The number of independent computations chains (lanes) to run.
-- **flags** : Flags to determine which fields are securely wiped.
-- **variant** : Argon2 algorithm variant ('i', 'd', or 'id').
-- **version** : Argon2 algorithm version number.
-- **encoding** : Encoding for the returned hash type ('raw', 'hex' or 'b64').
 
 For assistance with parameter selection refer to [RFC 9106](https://www.rfc-editor.org/rfc/rfc9106.html), in particular "Chapter 4: Parameter Choice".
 
