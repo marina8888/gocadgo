@@ -4,26 +4,26 @@ from helper import set_boundary, set_initial
 from plotter import show_fields
 
 def main():
-    HEIGHT = 40
-    WIDTH = 10
-    LENGTH = 20
+    HEIGHT = 10
+    WIDTH = 40
+    LENGTH = 40
 
     # setting up inital field:
 
-    air_init = set_initial(T=20,
+    air_init = set_initial(T=293,
                  P=100000,
                  m=0.034/(HEIGHT*WIDTH),
                  gas_type="air"
                  )
 
-    nitrogen_init = set_initial(T=350,
+    nitrogen_init = set_initial(T=523,
                  P=440000,
                  m=0.01/(HEIGHT*WIDTH),
                  gas_type="N2"
                  )
 
-    air_boundary = set_boundary(T_out=30, P_out=99985)
-    nitrogen_boundary = set_boundary(T_out=300, P_out=439995)
+    air_boundary = set_boundary(T_out=303, P_out=99985)
+    nitrogen_boundary = set_boundary(T_out=573, P_out=439995)
 
     # create mesh and run network:
     air_train = Network(WIDTH, HEIGHT, LENGTH, air_init, air_boundary)

@@ -106,11 +106,12 @@ class Cell:
 
     def update_q(self, T_prev:float):
         self.gas.TP = self._T, self._P
-        self.q = self._m * self.gas.cp_mass * (self.T - T_prev) # anticipated heat transfer between two connected cells
+        self.q = self._m * self.gas.cp_mass/1000 * (self.T - T_prev) # anticipated heat transfer between two connected cells
 
     def update_fields(self, T_prev:float, P_prev:float):
-        self.update_q(P_prev)
-        self.T = self.q / (self._m * self.gas.cp_mass) + T_prev # anticipated heat transfer between two connected cells
+        self.update_q(T_prev)
+        print(self.q)
+        self.T = self.q / (self._m * self.gas.cp_mass/1000) + T_prev # anticipated heat transfer between two connected cells
 
     def p_factor(self):
         """

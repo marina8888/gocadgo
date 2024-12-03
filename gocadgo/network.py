@@ -50,12 +50,11 @@ class Network:
         for i in range(self.network.shape[0]):
             for j in range(self.network.shape[1]):
                 # Update the fields of the second cell (network[i, j, 1])
+                # Print values for verification
+                print(f' values {i} and j {j} updated')
+                print(self.network[i, j, 1].T)  # Print the T value of the second cell
                 self.network[i, j, 1].update_fields(T_prev=boundary['T_out'], P_prev=boundary['P_out'])
 
-                # Print values for verification
-                print(self.network[i, j, 1].T)  # Print the T value of the second cell
-                print(self.network[i, j, 1].P)  # Print the P value of the second cell
-                print(self.network[i, j, 1].m)  # Print the m value of the second cell
 
     def run_network(self):
         """
@@ -63,11 +62,11 @@ class Network:
         Returns
         -------
         """
-        for i in range(self.network.shape[0]):  # Iterate over the first dimension
-            for j in range(self.network.shape[1]):  # Iterate over the second dimension
-                for k in range(self.network.shape[2]):  # Iterate over the third dimension
-                    cell = self.network[i, j, k]
-                    # Perform your operation on each cell
-                    cell.update_fields(T_prev=..., P_prev=...)
+        # for i in range(self.network.shape[0]):  # Iterate over the first dimension
+        #     for j in range(self.network.shape[1]):  # Iterate over the second dimension
+        #         for k in range(self.network.shape[2]):  # Iterate over the third dimension
+        #             cell = self.network[i, j, k]
+        #             # Perform your operation on each cell
+        #             cell.update_fields()
 
         return self.network

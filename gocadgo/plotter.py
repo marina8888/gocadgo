@@ -15,31 +15,38 @@ def show_fields(network, field = 'T', slice_index = 2):
 
     """
     #  Slicing:
-    Z = np.array([[getattr(network[slice_index, j, k], field) for j in range(network.shape[1])] for k in range(network.shape[2])])
+    Z = np.vectorize(lambda cell: cell.T)(network[slice_index, :, :])
     X, Y = np.meshgrid(np.arange(network.shape[1]), np.arange(network.shape[2]))
-
     fig = plt.figure(figsize=(8, 6))
     ax = fig.add_subplot(111, projection='3d')
 
-    # Surface and contour plots
-    surf = ax.plot_surface(X, Y, Z, cmap="autumn_r", lw=0, rstride=1, cstride=1, label=field)
-    contour = ax.contour(X, Y, Z, 10, lw=3, colors="k", linestyles="solid", label=field)
-    plt.show()
+    x = X.flatten()
+    y = Y.flatten()
+    z = Z.flatten()
+
+    # Surface and contour plots:
+    # surf = ax.plot_surface(x, y, z, cmap="autumn_r", lw=0, rstride=1, cstride=1, label=field)
+    # contour = ax.contour(x, y, z, 10, lw=3, colors="k", linestyles="solid", label=field)
+    # plt.show()
 
 
-    # Flatten and triangulation interp on the data:
-    x = X.flatten().astype(float)
-    y = Y.flatten().astype(float)
-    z = Z.flatten().astype(float)
-    triang = Triangulation(x, y)
+    # triang = Triangulation(x, y)
 
     # Create a 2D contour plot with tricontourf
     plt.figure(figsize=(8, 6))
-    plt.tricontourf(triang, z, cmap='viridis')
+    plt.tricontourf(x, y, z, cmap='viridis')
+    contour = plt.tricontourf(x, y, z, cmap='viridis', levels=5)  # You can specify levels or leave it to default
 
-    # Add a colorbar and labels
-    plt.colorbar(label=field)
-    plt.title(f'Tricontourf of Slice at z={slice_index}')
+    # Set the range for the colorbar
+    cbar = plt.colorbar(contour)  # Create the colorbar for the plot
+    cbar.set_label('Temperature (K)')  # Label the colorbar
+    contour.set_clim(vmin=250, vmax=450)  # Set the limits of the colorbar
+    cbar.set_ticks([250, 300, 350, 400, 450])
+
+    print(x)
+    print(y)
+    print(z)
+
     plt.xlabel('X')
     plt.ylabel('Y')
 
