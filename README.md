@@ -4,9 +4,9 @@
 
 - [x] Add depedencies <br>
 - [x] Add example code and readme. <br>
-- [ ] k_p, k_t calcs <br>
+- [x] k_p, k_t calcs <br>
 - [ ] Add link to documentation <br>
-- [ ] ensure network is connected correctly and propagates <br>
+- [ ] ensure network is connected correctly and propagates - check error <br>
 - [x] get the fields to actually print (somehow) <br>
 
 ## Installation

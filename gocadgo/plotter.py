@@ -26,23 +26,17 @@ def show_fields(network:dict, field = 'T', slice_index = 2, title = None):
     Z = data.flatten()
     X_flat = X.flatten()
     Y_flat = Y.flatten()
-
-    # Create a triangulation object for tricontourf
     triang = Triangulation(X_flat, Y_flat)
 
-    # Create the tricontourf plot
-    plt.figure(figsize=(8, 6))
     contour = plt.tricontourf(triang, Z)
-
-    # Add a colorbar
-    cbar = plt.colorbar(contour)
-
-    # Add labels and title
-    plt.xlabel("X-axis")
-    plt.ylabel("Y-axis")
-    plt.title(f"Tricontourf Plot for Field: {field}" if title is None else title)
-
-    # Show the plot
+    cbar = plt.colorbar(contour, orientation='horizontal')
+    cbar.ax.tick_params(labelsize=14)  # Increase font size for colorbar ticks
+    plt.xlabel("X-axis", fontsize=16)
+    plt.ylabel("Y-axis", fontsize=16)
+    plt.title(f"Tricontourf Plot for Field: {field}" if title is None else title, fontsize=18)
+    plt.gca().set_aspect('equal')
+    plt.xticks(fontsize=14)
+    plt.yticks(fontsize=14)
     plt.show()
 
 
