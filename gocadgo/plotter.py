@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.tri import Triangulation
 
-def show_fields(network:dict, field = 'T', slice_index = 2):
+def show_fields(network:dict, field = 'T', slice_index = 2, title = None):
     """
     Plotting a field across sliced 3D data
     Parameters
@@ -40,7 +40,7 @@ def show_fields(network:dict, field = 'T', slice_index = 2):
     # Add labels and title
     plt.xlabel("X-axis")
     plt.ylabel("Y-axis")
-    plt.title(f"Tricontourf Plot for Field: {field}")
+    plt.title(f"Tricontourf Plot for Field: {field}" if title is None else title)
 
     # Show the plot
     plt.show()
