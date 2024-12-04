@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.tri import Triangulation
 
-def show_fields(network, field = 'T', slice_index = 2):
+def show_fields(network:dict, field = 'T', slice_index = 2):
     """
     Plotting a field across sliced 3D data
     Parameters
@@ -12,45 +12,37 @@ def show_fields(network, field = 'T', slice_index = 2):
 
     Returns
     -------
-
     """
-    #  Slicing:
-    Z = np.vectorize(lambda cell: cell.T)(network[slice_index, :, :])
-    X, Y = np.meshgrid(np.arange(network.shape[1]), np.arange(network.shape[2]))
-    fig = plt.figure(figsize=(8, 6))
-    ax = fig.add_subplot(111, projection='3d')
+    if field not in network:
+        raise KeyError(f"Field '{field}' not found in the network.")
+    data = network[field][slice_index, :, :]  # Slice the 3D data along the first axis
 
-    x = X.flatten()
-    y = Y.flatten()
-    z = Z.flatten()
+    # Generate X and Y grid for the data
+    x = np.arange(data.shape[1])
+    y = np.arange(data.shape[0])
+    X, Y = np.meshgrid(x, y)
 
-    # Surface and contour plots:
-    # surf = ax.plot_surface(x, y, z, cmap="autumn_r", lw=0, rstride=1, cstride=1, label=field)
-    # contour = ax.contour(x, y, z, 10, lw=3, colors="k", linestyles="solid", label=field)
-    # plt.show()
+    # Flatten X, Y, and Z for Triangulation
+    Z = data.flatten()
+    X_flat = X.flatten()
+    Y_flat = Y.flatten()
 
+    # Create a triangulation object for tricontourf
+    triang = Triangulation(X_flat, Y_flat)
 
-    # triang = Triangulation(x, y)
-
-    # Create a 2D contour plot with tricontourf
+    # Create the tricontourf plot
     plt.figure(figsize=(8, 6))
-    plt.tricontourf(x, y, z, cmap='viridis')
-    contour = plt.tricontourf(x, y, z, cmap='viridis', levels=5)  # You can specify levels or leave it to default
+    contour = plt.tricontourf(triang, Z)
 
-    # Set the range for the colorbar
-    cbar = plt.colorbar(contour)  # Create the colorbar for the plot
-    cbar.set_label('Temperature (K)')  # Label the colorbar
-    contour.set_clim(vmin=250, vmax=450)  # Set the limits of the colorbar
-    cbar.set_ticks([250, 300, 350, 400, 450])
+    # Add a colorbar
+    cbar = plt.colorbar(contour)
 
-    print(x)
-    print(y)
-    print(z)
+    # Add labels and title
+    plt.xlabel("X-axis")
+    plt.ylabel("Y-axis")
+    plt.title(f"Tricontourf Plot for Field: {field}")
 
-    plt.xlabel('X')
-    plt.ylabel('Y')
-
-    # Show the contour plot
+    # Show the plot
     plt.show()
 
 
